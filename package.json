@@ -1,0 +1,32 @@
+{
+  "name": "git-idm-npm",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Git identity manager for npm",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kireobat/git-idm-npm.git"
+  },
+  "keywords": [
+    "git",
+    "github",
+    "npm",
+    "identity"
+  ],
+  "author": "Kireobat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kireobat/git-idm-npm/issues"
+  },
+  "homepage": "https://github.com/Kireobat/git-idm-npm#readme",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  },
+  "bin": {
+    "git-idm": "./app.js"
+  }
+}
