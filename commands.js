@@ -6,13 +6,14 @@ let identities;
 
 const loadFile = (filePath) => {
     const dirPath = filePath.substring(0, filePath.lastIndexOf('/'));
-    const identitiesPath = path.join(filePath, 'identities.json');
+    const identitiesPath = path.join(dirPath, 'identities.json');
 
     /*
     console.log("dirPath: "+dirPath);
     console.log("identitiesPath: "+identitiesPath);
     console.log("filePath: "+filePath);
     */
+    
 
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });

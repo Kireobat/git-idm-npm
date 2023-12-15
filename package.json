@@ -1,6 +1,6 @@
 {
   "name": "git-idm-npm",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "description": "Git identity manager for npm",
   "main": "app.js",
