@@ -11,11 +11,12 @@ export const gitIdentitesPath = homedir + '/.git-identities/identities.json';
 
 
 const argv = yargs(hideBin(process.argv))
+
     .command(
-        'list',
-        'List all saved git identities', {},
+        'active',
+        'Show active git identity', {},
         function () {
-            c.listIdentities(gitIdentitesPath);
+            c.activeIdentity()
         }
     )
     .command(
@@ -65,11 +66,18 @@ const argv = yargs(hideBin(process.argv))
         }
     )
     .command(
+        'list',
+        'List all saved git identities', {},
+        function () {
+            c.listIdentities(gitIdentitesPath);
+        }
+    )
+    .command(
         'remove',
         'Remove a git identity', {
             name: {
-                alias: 'n',
-                describe: 'Name of the user',
+                alias: ['n', 'a', 'alias'],
+                describe: 'Name/alias of the user',
                 demandOption: true,
                 type: 'string'
             }
@@ -80,16 +88,23 @@ const argv = yargs(hideBin(process.argv))
     )
     .command(
         'use',
-        'Set git identity for current repository', {
+        'Set git identity for current repository or globally', {
             name: {
-                alias: 'n',
-                describe: 'Name of the user',
+                alias: ['n', 'a', 'alias'],
+                describe: 'Name/alias of the user',
                 demandOption: true,
                 type: 'string'
+            },
+            global: {
+                alias: 'g',
+                describe: 'Set identity globally',
+                demandOption: false,
+                default: false,
+                type: 'boolean'
             }
         },
         function (argv) {
-            c.useIdentity(argv.name, gitIdentitesPath)
+            c.useIdentity(argv.name, gitIdentitesPath, argv.global)
         }
     )
     .help()

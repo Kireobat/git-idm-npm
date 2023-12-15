@@ -84,7 +84,7 @@ export const removeIdentity = (name, filePath) => {
 
     identities = loadFile(filePath);
 
-    const index = identities.findIndex(identity => identity.name === name);
+    const index = identities.findIndex(identity => identity.name === name || identity.alias === name);
     
     if (index !== -1) {
         identities.splice(index, 1);
@@ -97,20 +97,33 @@ export const removeIdentity = (name, filePath) => {
     }
 }
 
-export const useIdentity = (name, filePath) => {
+export const useIdentity = (name, filePath, global) => {
     const identitiesPath = path.join(filePath, 'identities.json');
 
     identities = loadFile(filePath);
 
     const index = identities.findIndex(identity => identity.name === name || identity.alias === name);
             
-    if (index !== -1) {
+    if (index !== -1 && global) {
         console.log('git config --global user.name ' + '"' + identities[index].name + '"');
         execSync('git config --global user.name ' + '"' + identities[index].name + '"');
 
         console.log('git config --global user.email ' + identities[index].email);
         execSync('git config --global user.email ' + identities[index].email);
+    } else if (index !== -1 && !global) {
+        console.log('git config user.name ' + '"' + identities[index].name + '"');
+        execSync('git config user.name ' + '"' + identities[index].name + '"');
+
+        console.log('git config user.email ' + identities[index].email);
+        execSync('git config user.email ' + identities[index].email);
     } else {
         console.log('Identity not found');
     }
+}
+
+export const activeIdentity = () => {
+    user.name = execSync('git config --get user.name', { encoding: 'utf8' }).trim();
+    user.email = execSync('git config --get user.email', { encoding: 'utf8' }).trim();
+
+    console.log("Active identity: " + user.name + " <" + user.email + ">")
 }
