@@ -5,11 +5,10 @@ import { execSync } from 'child_process';
 let identities;
 
 const loadFile = (filePath) => {
-    const dirPath = filePath.substring(0, filePath.lastIndexOf('/'));
-    const identitiesPath = path.join(dirPath, 'identities.json');
+    const identitiesPath = path.join(filePath, 'identities.json');
 
-    if (!fs.existsSync(dirPath)) {
-        fs.mkdirSync(dirPath, { recursive: true });
+    if (!fs.existsSync(filePath)) {
+        fs.mkdirSync(filePath, { recursive: true });
     }
 
     if (!fs.existsSync(identitiesPath)) {
