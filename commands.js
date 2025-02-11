@@ -8,13 +8,6 @@ const loadFile = (filePath) => {
     const dirPath = filePath.substring(0, filePath.lastIndexOf('/'));
     const identitiesPath = path.join(dirPath, 'identities.json');
 
-    /*
-    console.log("dirPath: "+dirPath);
-    console.log("identitiesPath: "+identitiesPath);
-    console.log("filePath: "+filePath);
-    */
-    
-
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
     }
@@ -67,13 +60,13 @@ export const addAlias = (name, alias, filePath) => {
     identities = loadFile(filePath);
 
     const index = identities.findIndex(identity => identity.name === name);
-    
+
     if (index !== -1) {
         identities[index].alias = alias;
         fs.writeFile(identitiesPath, JSON.stringify(identities), (err) => {
             if (err) throw err;
-                console.log('Alias added/changed for ' + name);
-            });
+            console.log('Alias added/changed for ' + name);
+        });
     } else {
         console.log('Identity not found');
     }
@@ -86,13 +79,13 @@ export const removeIdentity = (name, filePath) => {
     identities = loadFile(filePath);
 
     const index = identities.findIndex(identity => identity.name === name || identity.alias === name);
-    
+
     if (index !== -1) {
         identities.splice(index, 1);
         fs.writeFile(identitiesPath, JSON.stringify(identities), (err) => {
             if (err) throw err;
-                console.log('Identity removed');
-            });
+            console.log('Identity removed');
+        });
     } else {
         console.log('Identity not found');
     }
@@ -104,7 +97,7 @@ export const useIdentity = (name, filePath, global) => {
     identities = loadFile(filePath);
 
     const index = identities.findIndex(identity => identity.name === name || identity.alias === name);
-            
+
     if (index !== -1 && global) {
         console.log('git config --global user.name ' + '"' + identities[index].name + '"');
         execSync('git config --global user.name ' + '"' + identities[index].name + '"');
